@@ -11,6 +11,11 @@ struct PlayerView: View {
     var body: some View {
         ZStack {
             BackgroundView()
+            
+            List {
+                SongCell()
+            }
+            .listStyle(.plain)
         }
     }
 }
