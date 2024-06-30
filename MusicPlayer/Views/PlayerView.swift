@@ -8,14 +8,32 @@
 import SwiftUI
 
 struct PlayerView: View {
+    
+    @StateObject var vm = ViewModel()
+    
     var body: some View {
-        ZStack {
-            BackgroundView()
-            
-            List {
-                SongCell()
+        NavigationView {
+            ZStack {
+                BackgroundView()
+                List {
+                    ForEach(vm.songs) { song in
+                        SongCell(song: song)
+                    }
+                }
+                .listStyle(.plain)
             }
-            .listStyle(.plain)
+            
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        // Action
+                    } label: {
+                        Image(systemName: "plus")
+                            .font(.title2)
+                            .foregroundStyle(.white)
+                    }
+                }
+            }
         }
     }
 }

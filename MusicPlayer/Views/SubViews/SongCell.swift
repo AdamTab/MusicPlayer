@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct SongCell: View {
+    
+    let song: SongModel
+    
     var body: some View {
         HStack {
             Color.white
@@ -15,9 +18,9 @@ struct SongCell: View {
                 .cornerRadius(10)
             
             VStack(alignment: .leading) {
-                Text("Hurt")
+                Text(song.name)
                     .nameFont()
-                Text("Johnny Cash")
+                Text(song.artist ?? "Unknow Artist")
                     .artistFont()
             }
             
@@ -32,5 +35,5 @@ struct SongCell: View {
 }
 
 #Preview {
-    SongCell()
+    SongCell(song: SongModel(name: "Hurt", data: Data(), artist: "Johnny Cash", coverImage: Data(), duration: 0))
 }
