@@ -10,8 +10,13 @@ import SwiftUI
 struct PlayerView: View {
     
     @StateObject var vm = ViewModel()
-    @State var showFiles = false
-    @State private var showDetails = false 
+    @State private var showFiles = false
+    @State private var showFullPlayer = true
+    @Namespace private var plaeyrAnimation
+    
+    var frameImage: CGFloat {
+        showFullPlayer ? 320 : 50
+    }
     
     var body: some View {
         NavigationView {
@@ -38,31 +43,77 @@ struct PlayerView: View {
                         /// Mini Player
                         HStack {
                             Color.white
-                                .frame(width: 40, height: 40)
+                                .frame(width: frameImage, height: frameImage)
                             
-                            VStack(alignment: .leading) {
+                            if !showFullPlayer {
+                                
+                                /// Description
+                                VStack(alignment: .leading) {
+                                    Text("Name")
+                                        .nameFont()
+                                    Text("Unknown Artist")
+                                        .artistFont()
+                                }
+                                .matchedGeometryEffect(id: "Description", in: plaeyrAnimation)
+                                
+                                Spacer()
+                                
+                                CustomButton(image: "play.fill", size: .title) {
+                                    // action
+                                }
+                                
+                            }
+                        }
+                        .padding()
+                        .background(showFullPlayer ? .clear : .black.opacity(0.3))
+                        .cornerRadius(10)
+                        .padding()
+                        
+                        /// Full Player
+                        if showFullPlayer {
+                            
+                            /// Discription
+                            VStack {
                                 Text("Name")
                                     .nameFont()
                                 Text("Unknown Artist")
                                     .artistFont()
                             }
+                            .matchedGeometryEffect(id: "Description", in: plaeyrAnimation)
+                            .padding(.top)
                             
-                            Spacer()
-                            
-                            Button {
-                                // Действие при нажатии на кнопку
-                            } label: {
-                                Image(systemName: "play.fill")
-                                    .foregroundStyle(.white)
-                                    .font(.title)
+                            VStack {
+                                /// Duration
+                                HStack {
+                                    Text("00:00")
+                                    Spacer()
+                                    Text("03:27")
+                                }
+                                .durationFont()
+                                .padding()
+                                
+                                /// Slider
+                                Divider()
+                                
+                                HStack(spacing: 40) {
+                                    CustomButton(image: "backward.end.fill", size: .title2) {
+                                        // action
+                                    }
+                                    CustomButton(image: "play.circle.fill", size: .largeTitle) {
+                                        // action
+                                    }
+                                    CustomButton(image: "forward.end.fill", size: .title2) {
+                                        // action
+                                    }
+                                }
                             }
                         }
-                        .padding()
-                        .background(.black.opacity(0.3))
-                        .cornerRadius(10)
-                        .padding()
-                        
-                        /// Full Player
+                    }
+                    .frame(height: showFullPlayer ? UIScreen.main.bounds.height : 70)
+                    .onTapGesture {
+                        withAnimation(.spring) {
+                            self.showFullPlayer.toggle()
+                        }
                     }
                 }
             }
@@ -84,6 +135,17 @@ struct PlayerView: View {
             .sheet(isPresented: $showFiles, content: {
                 ImportFileManager(songs: $vm.songs)
             })
+        }
+    }
+    
+    // MARK: - Methods
+    private func CustomButton(image: String, size: Font, action: @escaping () -> ()) -> some View {
+        Button {
+            action()
+        } label: {
+            Image(systemName: image)
+                .foregroundStyle(.white)
+                .font(size)
         }
     }
 }
