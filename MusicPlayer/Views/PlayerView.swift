@@ -107,9 +107,10 @@ struct PlayerView: View {
                                     }
                                 }
                             }
+                            .padding(.horizontal, 40)
                         }
                     }
-                    .frame(height: showFullPlayer ? UIScreen.main.bounds.height : 70)
+                    .frame(height: showFullPlayer ? SizeConstant.fullPlayer : SizeConstant.miniPlayer)
                     .onTapGesture {
                         withAnimation(.spring) {
                             self.showFullPlayer.toggle()

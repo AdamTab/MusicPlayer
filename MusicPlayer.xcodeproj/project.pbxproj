@@ -15,6 +15,7 @@
 		F11E1DBA2C2E26EC00F2BCD4 /* Font + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E1DB92C2E26EC00F2BCD4 /* Font + Extension.swift */; };
 		F11E1DBC2C2F159700F2BCD4 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E1DBB2C2F159700F2BCD4 /* Model.swift */; };
 		F11E1DBE2C2F189300F2BCD4 /* SongCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E1DBD2C2F189300F2BCD4 /* SongCell.swift */; };
+		F151D3ED2C35FD25003699DE /* SizeConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = F151D3EC2C35FD25003699DE /* SizeConstant.swift */; };
 		F1A0B6EC2C2F409E0047B319 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A0B6EB2C2F409E0047B319 /* ViewModel.swift */; };
 		F1FBFFC72C3327CE00D7BCA3 /* ImportFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1FBFFC62C3327CE00D7BCA3 /* ImportFileManager.swift */; };
 /* End PBXBuildFile section */
@@ -29,6 +30,7 @@
 		F11E1DB92C2E26EC00F2BCD4 /* Font + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font + Extension.swift"; sourceTree = "<group>"; };
 		F11E1DBB2C2F159700F2BCD4 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		F11E1DBD2C2F189300F2BCD4 /* SongCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongCell.swift; sourceTree = "<group>"; };
+		F151D3EC2C35FD25003699DE /* SizeConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizeConstant.swift; sourceTree = "<group>"; };
 		F1A0B6EB2C2F409E0047B319 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		F1FBFFC62C3327CE00D7BCA3 /* ImportFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportFileManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -121,6 +123,7 @@
 			children = (
 				F11E1DB92C2E26EC00F2BCD4 /* Font + Extension.swift */,
 				F1FBFFC62C3327CE00D7BCA3 /* ImportFileManager.swift */,
+				F151D3EC2C35FD25003699DE /* SizeConstant.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -198,6 +201,7 @@
 				F1FBFFC72C3327CE00D7BCA3 /* ImportFileManager.swift in Sources */,
 				F11E1DBE2C2F189300F2BCD4 /* SongCell.swift in Sources */,
 				F11E1DBC2C2F159700F2BCD4 /* Model.swift in Sources */,
+				F151D3ED2C35FD25003699DE /* SizeConstant.swift in Sources */,
 				F11E1DB72C2E226900F2BCD4 /* BackgroundView.swift in Sources */,
 				F11E1DA72C2E1A5100F2BCD4 /* PlayerView.swift in Sources */,
 				F11E1DA52C2E1A5100F2BCD4 /* MusicPlayerApp.swift in Sources */,
