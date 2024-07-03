@@ -11,19 +11,63 @@ struct PlayerView: View {
     
     @StateObject var vm = ViewModel()
     @State var showFiles = false
+    @State private var showDetails = false 
     
     var body: some View {
         NavigationView {
             ZStack {
+                
                 BackgroundView()
-                List {
-                    ForEach(vm.songs) { song in
-                        SongCell(song: song)
+                
+                VStack {
+                    List {
+                        ForEach(vm.songs) { song in
+                            SongCell(song: song, durationFormated: vm.durationFormatted)
+                                .onTapGesture {
+                                    vm.playAudio(song: song)
+                                }
+                        }
+                    }
+                    .listStyle(.plain)
+                    
+                    Spacer()
+                    
+                    // MARK: - Player
+                    VStack {
+                        
+                        /// Mini Player
+                        HStack {
+                            Color.white
+                                .frame(width: 40, height: 40)
+                            
+                            VStack(alignment: .leading) {
+                                Text("Name")
+                                    .nameFont()
+                                Text("Unknown Artist")
+                                    .artistFont()
+                            }
+                            
+                            Spacer()
+                            
+                            Button {
+                                // Действие при нажатии на кнопку
+                            } label: {
+                                Image(systemName: "play.fill")
+                                    .foregroundStyle(.white)
+                                    .font(.title)
+                            }
+                        }
+                        .padding()
+                        .background(.black.opacity(0.3))
+                        .cornerRadius(10)
+                        .padding()
+                        
+                        /// Full Player
                     }
                 }
-                .listStyle(.plain)
             }
             
+            //NARK: - Navigation Bar
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
