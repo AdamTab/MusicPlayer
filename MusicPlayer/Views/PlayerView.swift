@@ -42,8 +42,26 @@ struct PlayerView: View {
                         
                         /// Mini Player
                         HStack {
-                            Color.white
-                                .frame(width: frameImage, height: frameImage)
+                            if let data = vm.currentSong?.coverImage, let uiImage = UIImage(data: data) {
+                                Image(uiImage: uiImage)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: frameImage, height: frameImage)
+                                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                            } else {
+                                ZStack {
+                                    Color.gray
+                                        .frame(width: frameImage, height: frameImage)
+                                    Image(systemName: "music.note")
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(height: 30)
+                                        .foregroundColor(.white)
+                                }
+                                .cornerRadius(10)
+                            }
+//                            Color.white
+//                                .frame(width: frameImage, height: frameImage)
                             
                             if !showFullPlayer {
                                 
