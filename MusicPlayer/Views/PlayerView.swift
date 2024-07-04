@@ -49,10 +49,12 @@ struct PlayerView: View {
                                 
                                 /// Description
                                 VStack(alignment: .leading) {
-                                    Text("Name")
-                                        .nameFont()
-                                    Text("Unknown Artist")
-                                        .artistFont()
+                                    if let currentSong = vm.currentSong {
+                                        Text(currentSong.name)
+                                            .nameFont()
+                                        Text(currentSong.artist ?? "Unknown Artist")
+                                            .artistFont()
+                                    }
                                 }
                                 .matchedGeometryEffect(id: "Description", in: plaeyrAnimation)
                                 

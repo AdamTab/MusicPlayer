@@ -9,9 +9,18 @@ import Foundation
 import AVFAudio
 
 class ViewModel: ObservableObject {
+    // MARK: - Properties
     @Published var songs: [SongModel] = []
     @Published var audioPlayer: AVAudioPlayer?
     @Published var isPlaying = false
+    @Published var currentIndex: Int?
+    
+    var currentSong: SongModel? {
+        guard let currentIndex = currentIndex, songs.indices.contains(currentIndex) else {
+            return nil
+        }
+        return songs[currentIndex]
+    }
     
     // MARK: - Methods
     func playAudio(song: SongModel) {
@@ -19,6 +28,9 @@ class ViewModel: ObservableObject {
             self.audioPlayer = try AVAudioPlayer(data: song.data)
             self.audioPlayer?.play()
             isPlaying = true
+            if let index = songs.firstIndex(where: { $0.id == song.id }) {
+                currentIndex = index
+            }
         } catch {
             print("Error in audio playback: \(error.localizedDescription)")
         }
@@ -32,3 +44,4 @@ class ViewModel: ObservableObject {
         return formatter.string(from: duration) ?? ""
     }
 }
+
