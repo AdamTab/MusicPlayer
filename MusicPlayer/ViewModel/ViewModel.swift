@@ -14,6 +14,8 @@ class ViewModel: ObservableObject {
     @Published var audioPlayer: AVAudioPlayer?
     @Published var isPlaying = false
     @Published var currentIndex: Int?
+    @Published var currentTime: TimeInterval = 0.0
+    @Published var totalTime: TimeInterval = 0.0
     
     var currentSong: SongModel? {
         guard let currentIndex = currentIndex, songs.indices.contains(currentIndex) else {
@@ -28,6 +30,7 @@ class ViewModel: ObservableObject {
             self.audioPlayer = try AVAudioPlayer(data: song.data)
             self.audioPlayer?.play()
             isPlaying = true
+            totalTime = audioPlayer?.duration ?? 0.0
             if let index = songs.firstIndex(where: { $0.id == song.id }) {
                 currentIndex = index
             }
@@ -36,6 +39,24 @@ class ViewModel: ObservableObject {
         }
     }
     
+    func playPause() {
+        if isPlaying {
+            self.audioPlayer?.pause()
+        } else {
+            self.audioPlayer?.play()
+        }
+        isPlaying.toggle()
+    }
+    
+    func seekAudio(time: TimeInterval) {
+        audioPlayer?.currentTime = time
+    }
+
+    func updateProgress() {
+        guard let player = audioPlayer else { return }
+        currentTime = player.currentTime
+    }
+
     func durationFormatted(duration: TimeInterval) -> String {
         let formatter = DateComponentsFormatter()
         formatter.allowedUnits = [.minute, .second]
