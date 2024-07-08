@@ -33,6 +33,7 @@ struct PlayerView: View {
                                     vm.playAudio(song: song)
                                 }
                         }
+                        .onDelete(perform: vm.delete)
                     }
                     .listStyle(.plain)
                     
@@ -40,14 +41,14 @@ struct PlayerView: View {
                     
                     // MARK: - Player
                     if vm.currentSong != nil {
+                        
                         Player()
-            
-                        .frame(height: showFullPlayer ? SizeConstant.fullPlayer : SizeConstant.miniPlayer)
-                        .onTapGesture {
-                            withAnimation(.spring) {
-                                self.showFullPlayer.toggle()
+                            .frame(height: showFullPlayer ? SizeConstant.fullPlayer : SizeConstant.miniPlayer)
+                            .onTapGesture {
+                                withAnimation(.spring) {
+                                    self.showFullPlayer.toggle()
+                                }
                             }
-                        }
                     }
                 }
             }
@@ -73,32 +74,14 @@ struct PlayerView: View {
     }
     
     // MARK: - Methods
-   // @ViewBuilder
     private func Player() -> some View {
         VStack {
-
+            
             /// Mini Player
             HStack {
                 
                 /// Cover
-                if let data = vm.currentSong?.coverImage, let uiImage = UIImage(data: data) {
-                    Image(uiImage: uiImage)
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(width: frameImage, height: frameImage)
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                } else {
-                    ZStack {
-                        Color.gray
-                            .frame(width: frameImage, height: frameImage)
-                        Image(systemName: "music.note")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(height: 30)
-                            .foregroundColor(.white)
-                    }
-                    .cornerRadius(10)
-                }
+                SongImageView(imageData: vm.currentSong?.coverImage, size: frameImage)
                 
                 if !showFullPlayer {
                     
@@ -157,13 +140,12 @@ struct PlayerView: View {
                     
                     HStack(spacing: 40) {
                         CustomButton(image: "backward.end.fill", size: .title2) {
-                            // action
-                        }
+                            vm.backward()                        }
                         CustomButton(image: vm.isPlaying ? "pause.circle.fill" : "play.circle.fill", size: .largeTitle) {
                             vm.playPause()
                         }
                         CustomButton(image: "forward.end.fill", size: .title2) {
-                            // action
+                            vm.forward()
                         }
                     }
                 }
