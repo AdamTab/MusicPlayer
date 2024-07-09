@@ -8,11 +8,12 @@
 import Foundation
 import SwiftUI
 import AVFoundation
+import RealmSwift
 
 /// ImportFileManager позволяет выбирать аудио файлы и импортировать их в приложение
 struct ImportFileManager: UIViewControllerRepresentable {
     
-    @Binding var songs: [SongModel]
+//    @Binding var songs: [SongModel] избавляемся из за  @ObservedResults(SongModel.self) var songs
     
     /// координатор управлять задачами между SwiftUI и UIKit
     func makeCoordinator() -> Coordinator {
@@ -42,7 +43,8 @@ struct ImportFileManager: UIViewControllerRepresentable {
         
         /// ССылка на родительский компонент ImportFileManager, чтобы можно было с ним взаимодействовать
         var parent: ImportFileManager
-        
+        @ObservedResults(SongModel.self) var songs
+ 
         init(parent: ImportFileManager) {
             self.parent = parent
         }
@@ -88,20 +90,17 @@ struct ImportFileManager: UIViewControllerRepresentable {
                 /// Получения продолжительности песни
                 song.duration = CMTimeGetSeconds(asset.duration)
 
-                /// Добавление песни в массив songs если там такой ешще нет 
-                if !self.parent.songs.contains(where: { $0.name == song.name }) {
-                    DispatchQueue.main.async {
-                        self.parent.songs.append(song)
-                    }
+                let isDuplicate = songs.contains { $0.name == song.name && $0.artist == song.artist }
+                
+                /// Добавление песни в массив songs если там такой ешще нет
+                if !isDuplicate {
+                    $songs.append(song)
                 } else {
                     print("Song with the same name already exists")
                 }
-
-                
             } catch {
                 print("Error processing the file: \(error)")
             }
         }
-        
     }
 }

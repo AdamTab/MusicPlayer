@@ -6,9 +6,11 @@
 //
 
 import SwiftUI
+import RealmSwift
 
 struct PlayerView: View {
     
+    @ObservedResults(SongModel.self) var songs
     @StateObject var vm = ViewModel()
     @State private var showFiles = false
     @State private var showFullPlayer = false
@@ -27,13 +29,13 @@ struct PlayerView: View {
                 
                 VStack {
                     List {
-                        ForEach(vm.songs) { song in
+                        ForEach(songs) { song in
                             SongCell(song: song, durationFormated: vm.durationFormatted)
                                 .onTapGesture {
                                     vm.playAudio(song: song)
                                 }
                         }
-                        .onDelete(perform: vm.delete)
+                        .onDelete(perform: $songs.remove())
                     }
                     .listStyle(.plain)
                     
@@ -68,7 +70,7 @@ struct PlayerView: View {
             
             // MARK: - Files Sheet
             .sheet(isPresented: $showFiles, content: {
-                ImportFileManager(songs: $vm.songs)
+                ImportFileManager()
             })
         }
     }
